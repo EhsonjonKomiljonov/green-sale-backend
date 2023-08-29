@@ -9,6 +9,96 @@ const SEC_KEY = process.env.SEC_KEY;
 const host = process.env.host;
 
 export class UserContr {
+  async myProfile(req, res) {
+    try {
+      const token = req.headers?.authorization;
+
+      const checkToken = jwt.verify(token, SEC_KEY);
+
+      if (typeof checkToken != 'string') {
+        const data = await UserModel.findOne({ _id: checkToken.id });
+
+        return res.send({
+          status: 200,
+          message: 'success',
+          data,
+        });
+      }
+    } catch (err) {
+      return res.status(501).send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
+  async editMyProfileInfo(req, res) {
+    try {
+      if (!Object.keys(req.body)[0]) throw new Error('Incorrect values!');
+      const token = req.headers?.authorization;
+
+      const checkToken = jwt.verify(token, SEC_KEY);
+
+      if (typeof checkToken != 'string') {
+        const data = await UserModel.updateOne(
+          { _id: checkToken.id },
+          req.body
+        );
+
+        return res.send({
+          status: 201,
+          message: 'updated',
+        });
+      }
+    } catch (err) {
+      return res.status(501).send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
+  async editMyProfileSec(req, res) {
+    try {
+      const token = req.headers?.authorization;
+      const { oldPassword, newPassword, returnNewPassword } = req.body;
+
+      if (!oldPassword || !newPassword || !returnNewPassword)
+        throw new Error('Incorrect values!');
+
+      if (newPassword.length < 6)
+        throw new Error("Parol eng kami 6 ta bo'lishi mumkin!");
+
+      if (newPassword.length > 60)
+        throw new Error("Parol eng ko'pi 60 ta bo'lishi mumkin!");
+
+      if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(newPassword))
+        throw new Error('Incorrect password!');
+
+      if (newPassword != returnNewPassword)
+        throw new Error("Yangi parol noto'g'ri tasdiqlangan!");
+
+      const getToken = jwt.verify(token, SEC_KEY);
+
+      if (typeof getToken != 'string') {
+        await UserModel.updateOne(
+          { _id: getToken.id },
+          { password: sha256(newPassword) }
+        );
+
+        return res.send({
+          status: 201,
+          message: 'updated',
+        });
+      }
+    } catch (err) {
+      return res.status(501).send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
   async verifyEmail(req, res) {
     try {
       const { hashUrl } = req.params;
@@ -56,7 +146,8 @@ export class UserContr {
 
       const token = jwt.sign(
         { id: data._id, email: data.email, password: data.password },
-        SEC_KEY
+        SEC_KEY,
+        { expiresIn: '3 days' }
       );
 
       return res.send({
@@ -81,7 +172,7 @@ export class UserContr {
       if (!/^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$/.test(email))
         throw new Error('Incorrect user email!');
 
-      if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password))
+      if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(password))
         throw new Error('Incorrect user password!');
 
       const data = await UserModel.findOne({
@@ -93,7 +184,8 @@ export class UserContr {
 
       const token = jwt.sign(
         { id: data._id, email: data.email, password: data.password },
-        SEC_KEY
+        SEC_KEY,
+        { expiresIn: '3 days' }
       );
 
       return res.send({
