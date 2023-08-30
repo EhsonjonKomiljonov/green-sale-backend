@@ -8,6 +8,4 @@ const sellerPost = new sellerPostContr();
 
 sellerPostRouter
   .post('/', checkToken, upload.single('imgLink'), sellerPost.sellerPostAdd)
-  .post('/')
-  .post('/')
-  .post('/');
+  .get('/', sellerPost.sellerPostGet);

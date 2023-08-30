@@ -1,6 +1,6 @@
 import { Schema, Types, model } from 'mongoose';
 
-const sellerPost = new Schema(
+const buyerPost = new Schema(
   {
     category_ref_id: {
       type: Types.ObjectId,
@@ -39,16 +39,6 @@ const sellerPost = new Schema(
       type: String,
       required: true,
     },
-    contact: {
-      type: String,
-      min: 9,
-      max: 13,
-      required: true,
-    },
-    imgLink: {
-      type: String,
-      required: true,
-    },
   },
   {
     timestamps: {
@@ -58,4 +48,4 @@ const sellerPost = new Schema(
   }
 );
 
-export const sellerPostModel = model('sellerPosts', sellerPost);
+export const buyerPostModel = model('buyerPosts', buyerPost);

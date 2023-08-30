@@ -1,7 +1,7 @@
-import { sellerPostModel } from '../models/sellerPost.model.js';
+import { buyerPostModel } from '../models/buyerPost.model.js';
 
-export class sellerPostContr {
-  async sellerPostAdd(req, res) {
+export class buyerPostContr {
+  async buyerPostAdd(req, res) {
     try {
       const {
         categoryId,
@@ -15,10 +15,20 @@ export class sellerPostContr {
         description,
         contact,
       } = req.body;
-      const { filename } = req.file;
+      console.log(
+        categoryId,
+        name,
+        price,
+        capacity,
+        capacityMeasure,
+        type,
+        region,
+        district,
+        description,
+        contact
+      );
       if (
         categoryId &&
-        filename &&
         name &&
         price &&
         capacity &&
@@ -29,7 +39,7 @@ export class sellerPostContr {
         description &&
         contact
       ) {
-        const newPost = await sellerPostModel.create({
+        const newPost = await buyerPostModel.create({
           category_ref_id: categoryId,
           name,
           price,
@@ -40,7 +50,6 @@ export class sellerPostContr {
           district,
           description,
           contact,
-          imgLink: '/' + filename,
         });
 
         return res.send({
@@ -48,10 +57,7 @@ export class sellerPostContr {
           message: null,
           data: newPost,
         });
-      } else
-        throw new Error(
-          'Required values categoryId, name, price, capacity, capacityMeasure, type, region, district, description, contact, !!!'
-        );
+      } else throw new Error('Invalid Values !!!');
     } catch (err) {
       return res.send({
         status: 501,
@@ -60,9 +66,9 @@ export class sellerPostContr {
       });
     }
   }
-  async sellerPostGet(req, res) {
+  async buyerPostGet(req, res) {
     try {
-      const data = await sellerPostModel.find();
+      const data = await buyerPostModel.find();
       console.log(data);
       return res.send({ status: 200, message: null, data });
     } catch (err) {
