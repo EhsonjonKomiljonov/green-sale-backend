@@ -128,6 +128,7 @@ export class UserContr {
         district,
         address,
         email,
+        contact,
         password,
       } = req.body;
       const getUser = await UserModel.findOne({ email });
@@ -141,6 +142,7 @@ export class UserContr {
         district,
         address,
         email,
+        contact,
         password: sha256(password),
       });
 
