@@ -9,6 +9,7 @@ export const userCheck = (req, res, next) => {
       region: Joi.string().required().min(3).max(50),
       district: Joi.string().required().min(3).max(50),
       address: Joi.string().required().min(2).max(50),
+      contact: Joi.string().required().min(9).max(13),
       password: Joi.string()
         .required()
         .min(6)
@@ -39,6 +40,7 @@ export const userEditCheck = (req, res, next) => {
       region: Joi.string().min(3).max(50),
       district: Joi.string().min(3).max(50),
       address: Joi.string().min(2).max(50),
+      contact: Joi.string().required().min(9).max(13),
     });
 
     const checkUser = validateUser.validate(req.body);

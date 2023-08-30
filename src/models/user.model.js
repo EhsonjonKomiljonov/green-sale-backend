@@ -15,6 +15,11 @@ const User = new Schema(
       required: true,
       unique: true,
     },
+    contact: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     region: {
       type: String,
       required: true,
