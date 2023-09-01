@@ -17,5 +17,4 @@ const category = new Schema(
 );
 
 export const categoryModel = model('categories', category);
-
-
+ 

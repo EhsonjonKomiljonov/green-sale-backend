@@ -2,6 +2,7 @@ import { UserModel } from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
 import { sendMail } from '../middlewares/email.check.js';
+import { AdminModel } from '../models/admin.model.js';
 import sha256 from 'sha256';
 
 config();
