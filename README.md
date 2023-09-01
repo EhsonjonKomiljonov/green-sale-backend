@@ -15,4 +15,20 @@ ADMIN
 /admin/edit-category/:id      (put) => category o'zgartirish.
 /admin/delete-category/:id    (delete) => category o'chirish.
 /admin/delete-seller-post/:id (delete) => seller post o'chirish.
-/admin/delete-buyer-post/:id  (delete) => buyer post o'chirish.
+/admin/delete-buyer-post/:id  (delete) => buyer post o'chirish.ADMIN
+
+SELLER POST
+
+/seller-post                      (post) => post qoshish
+/seller-post                      (get) => postlarni hammasini olish
+/seller-post/:id                  (get) => postni id bilan olish
+/seller-post/:id                  (put) => post update faqat ozinikini.
+/seller-post/:id                  (delete) => post ochirish faqat ozinikini.
+
+buyer POST
+
+/buyer-post                      (post) => post qoshish
+/buyer-post                      (get) => postlarni hammasini olish
+/buyer-post/:id                  (get) => postni id bilan olish
+/buyer-post/:id                  (put) => post update faqat ozinikini.
+/buyer-post/:id                  (delete) => post ochirish faqat ozinikini.

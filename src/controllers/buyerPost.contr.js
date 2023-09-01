@@ -15,18 +15,7 @@ export class buyerPostContr {
         description,
         contact,
       } = req.body;
-      console.log(
-        categoryId,
-        name,
-        price,
-        capacity,
-        capacityMeasure,
-        type,
-        region,
-        district,
-        description,
-        contact
-      );
+
       if (
         categoryId &&
         name &&
@@ -75,6 +64,87 @@ export class buyerPostContr {
       const data = await buyerPostModel.find();
       console.log(data);
       return res.send({ status: 200, message: null, data });
+    } catch (err) {
+      return res.send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
+  async buyerPostPut(req, res) {
+    try {
+      const {
+        name,
+        price,
+        capacity,
+        capacityMeasure,
+        type,
+        description,
+        contact,
+      } = req.body;
+
+      const findedPost = await buyerPostModel.findById(req.params.id);
+
+      if (!findedPost) {
+        throw new Error('bunday post mavjud emas');
+      }
+
+      if (
+        (name ||
+          price ||
+          capacity ||
+          capacityMeasure ||
+          type ||
+          description ||
+          contact) &&
+        toString(req.user._id) == toString(findedPost.user_ref_id)
+      ) {
+        const newPost = await buyerPostModel.findByIdAndUpdate(req.params.id, {
+          name: name ? name : findedPost.name,
+          price: price ? price : findedPost.price,
+          capacity: capacity ? capacity : findedPost.capacity,
+          capacityMeasure: capacityMeasure
+            ? capacityMeasure
+            : findedPost.capacityMeasure,
+          type: type ? type : findedPost.type,
+          description: description ? description : findedPost.description,
+          contact: contact ? contact : findedPost.contact,
+        });
+
+        return res.send({
+          status: 200,
+          message: null,
+          data: newPost,
+        });
+      }
+    } catch (err) {
+      return res.send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
+  async buyerPostDelete(req, res) {
+    try {
+      const findedPost = await buyerPostModel.findById(req.params.id);
+
+      if (!findedPost) {
+        throw new Error('buday post mavjud emas!!!');
+      }
+
+      if (toString(req.user._id) == toString(findedPost.user_ref_id)) {
+        const deletedItem = await buyerPostModel.findByIdAndDelete(
+          req.params.id
+        );
+
+        return res.send({
+          status: 200,
+          message: 'deleted',
+          data: deletedItem,
+        });
+      } else throw new Error('Sizning buday postingiz mavjud emas !!!');
     } catch (err) {
       return res.send({
         status: 501,

@@ -7,4 +7,6 @@ const buyerPost = new buyerPostContr();
 
 buyerPostRouter
   .post('/', checkToken, buyerPost.buyerPostAdd)
-  .get('/', buyerPost.buyerPostGet);
+  .get('/', buyerPost.buyerPostGet)
+  .put('/:id', checkToken, buyerPost.buyerPostPut)
+  .delete('/:id', checkToken, buyerPost.buyerPostDelete);
