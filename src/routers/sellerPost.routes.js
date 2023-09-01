@@ -7,5 +7,8 @@ export const sellerPostRouter = Router();
 const sellerPost = new sellerPostContr();
 
 sellerPostRouter
-  .post('/', checkToken, upload.single('imgLink'), sellerPost.sellerPostAdd)
-  .get('/', sellerPost.sellerPostGet);
+  .post('/', checkToken, upload.array('imgLink'), sellerPost.sellerPostAdd)
+  .put('/:id', checkToken, upload.array('imgLink'), sellerPost.sellerPostPut)
+  .delete('/:id', checkToken, upload.array('imgLink'), sellerPost.sellerPostDelete)
+  .get('/', sellerPost.sellerPostGet)
+  .get('/:id', sellerPost.sellerPostGetId);

@@ -6,6 +6,13 @@ const buyerPost = new Schema(
       type: Types.ObjectId,
       ref: 'categories',
       key: '_id',
+      required: true,
+    },
+    user_ref_id: {
+      type: Types.ObjectId,
+      ref: 'users',
+      key: '_id',
+      required: true,
     },
     name: {
       type: String,
@@ -36,6 +43,10 @@ const buyerPost = new Schema(
       required: true,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    contact: {
       type: String,
       required: true,
     },

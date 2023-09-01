@@ -8,8 +8,10 @@ export const checkToken = async (req, res, next) => {
 
       if (checkedToken?.id) {
         const user = await UserModel.findById(checkedToken.id);
-        req.user = user;
-        return next();
+        if (user) {
+          req.user = user;
+          return next();
+        } else throw new Error('Invalid Token !!!');
       } else throw new Error('Invalid Token !!!');
     } else throw new Error('Unauthorized');
   } catch (err) {

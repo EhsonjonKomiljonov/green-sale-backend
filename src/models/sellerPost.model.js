@@ -6,6 +6,13 @@ const sellerPost = new Schema(
       type: Types.ObjectId,
       ref: 'categories',
       key: '_id',
+      required: true,
+    },
+    user_ref_id: {
+      type: Types.ObjectId,
+      ref: 'users',
+      key: '_id',
+      required: true,
     },
     name: {
       type: String,
@@ -46,7 +53,7 @@ const sellerPost = new Schema(
       required: true,
     },
     imgLink: {
-      type: String,
+      type: Array,
       required: true,
     },
   },

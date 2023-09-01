@@ -41,6 +41,7 @@ export class buyerPostContr {
       ) {
         const newPost = await buyerPostModel.create({
           category_ref_id: categoryId,
+          user_ref_id: req.user._id,
           name,
           price,
           capacity,
@@ -57,7 +58,10 @@ export class buyerPostContr {
           message: null,
           data: newPost,
         });
-      } else throw new Error('Invalid Values !!!');
+      } else
+        throw new Error(
+          'Required Values categoryId, name, price, capacity, capacityMeasure,region, description, district, type, contact !!!'
+        );
     } catch (err) {
       return res.send({
         status: 501,

@@ -5,7 +5,9 @@ const storage = multer.diskStorage({
     cb(null, process.cwd() + '/public');
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + file.originalname;
+    let fileName = file.originalname;
+    fileName = fileName.replace(/\s/g, '');
+    const uniqueSuffix = Date.now() + fileName;
     cb(null, uniqueSuffix);
   },
 });

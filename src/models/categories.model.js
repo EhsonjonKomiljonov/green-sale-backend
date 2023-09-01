@@ -18,14 +18,4 @@ const category = new Schema(
 
 export const categoryModel = model('categories', category);
 
-// await categoryModel.create([
-//   {
-//     name: 'Sabzavotlar',
-//   },
-//   {
-//     name: 'Mevalar',
-//   },
-//   {
-//     name: 'Poliz-Ekinlari',
-//   },
-// ]);
+
