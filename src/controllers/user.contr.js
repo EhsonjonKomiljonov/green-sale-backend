@@ -213,9 +213,11 @@ export class UserContr {
   }
   async resetPassword(req, res) {
     try {
-      const { email, password } = req.body;
+      const { email, newPassword } = req.body;
 
       const userId = await UserModel.findOne({ email });
+
+      if (!userId) throw new Error('Not found user from email: ' + email);
 
       await sendMail(
         email,
@@ -234,7 +236,7 @@ export class UserContr {
           text-decoration: none;
         "
         href="${
-          host + '/users/verify-email/' + userId._id + '$' + sha256(password)
+          host + '/users/verify-email/' + userId._id + '$' + sha256(newPassword)
         }">Tasdiqlash</a>`
       );
 
