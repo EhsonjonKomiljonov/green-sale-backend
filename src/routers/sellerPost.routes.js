@@ -11,4 +11,5 @@ sellerPostRouter
   .put('/:id', checkToken, upload.array('imgLink'), sellerPost.sellerPostPut)
   .delete('/:id', checkToken, upload.array('imgLink'), sellerPost.sellerPostDelete)
   .get('/', sellerPost.sellerPostGet)
+  .get('/get-posts', sellerPost.sellerPostGetPosts)
   .get('/:id', sellerPost.sellerPostGetId);

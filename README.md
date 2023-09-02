@@ -24,6 +24,7 @@ ADMIN
 SELLER POST
 
 /seller-post                      (post) => post qoshish
+/seller-post/get-posts            (get) => 3ta buyer 3ta seller
 /seller-post                      (get) => postlarni hammasini olish
 /seller-post/:id                  (get) => postni id bilan olish
 /seller-post/:id                  (put) => post update faqat ozinikini.
