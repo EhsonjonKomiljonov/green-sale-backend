@@ -2,6 +2,7 @@ import { categoryModel } from '../models/categories.model.js';
 import { sellerPostModel } from '../models/sellerPost.model.js';
 import fs from 'fs';
 import path from 'path';
+import { buyerPostModel } from '../models/buyerPost.model.js';
 export class sellerPostContr {
   async sellerPostAdd(req, res) {
     try {
@@ -80,6 +81,20 @@ export class sellerPostContr {
         });
       }
 
+      return res.send({ status: 200, message: null, data });
+    } catch (err) {
+      return res.send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
+  async sellerPostGetPosts(req, res) {
+    try {
+      let data = [];
+      data = await sellerPostModel.find().limit(3);
+      data.push(...(await buyerPostModel.find().limit(3)));
       return res.send({ status: 200, message: null, data });
     } catch (err) {
       return res.send({
