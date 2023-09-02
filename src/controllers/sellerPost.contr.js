@@ -37,6 +37,9 @@ export class sellerPostContr {
 
           filenames.push('/' + filename);
         }
+
+        console.log(filenames)
+        console.log(req.files)
         if (req.files.length) {
           const newPost = await sellerPostModel.create({
             category_ref_id: categoryId,
