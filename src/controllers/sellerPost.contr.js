@@ -7,13 +7,13 @@ export class sellerPostContr {
   async sellerPostAdd(req, res) {
     try {
       const {
-        categoryId,
         name,
         price,
         capacity,
         capacityMeasure,
         type,
         region,
+        categoryId,
         district,
         description,
         contact,
@@ -31,12 +31,12 @@ export class sellerPostContr {
         contact
       ) {
         const filenames = [];
-
         for (let el of req.files) {
           const filename = el.filename.replace('/', '');
 
           filenames.push('/' + filename);
         }
+        console.log(req.files);
         if (req.files.length) {
           const newPost = await sellerPostModel.create({
             category_ref_id: categoryId,
