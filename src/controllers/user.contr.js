@@ -82,6 +82,13 @@ export class UserContr {
       const getToken = jwt.verify(token, SEC_KEY);
 
       if (typeof getToken != 'string') {
+        const getUserPassword = await UserModel.findOne({
+          email: getToken?.email,
+          password: sha256(oldPassword),
+        });
+
+        if (!getUserPassword) throw new Error("Parol noto'g'ri kiritilgan!");
+
         await UserModel.updateOne(
           { _id: getToken.id },
           { password: sha256(newPassword) }
@@ -209,8 +216,6 @@ export class UserContr {
       const { email, password } = req.body;
 
       const userId = await UserModel.findOne({ email });
-
-      console.log(userId);
 
       await sendMail(
         email,

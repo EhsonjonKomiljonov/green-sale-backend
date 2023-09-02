@@ -1,3 +1,7 @@
+TOKEN CHECK
+
+/check-token                 (get) => token to'g'rimi yo'qmi tekshirish.
+
 USERS
 
 /users                       (post) => user register.
