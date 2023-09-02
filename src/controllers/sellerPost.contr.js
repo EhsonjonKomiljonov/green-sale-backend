@@ -72,8 +72,14 @@ export class sellerPostContr {
   }
   async sellerPostGet(req, res) {
     try {
-      const data = await sellerPostModel.find();
-      console.log(data);
+      let data = [];
+      data = await sellerPostModel.find();
+      if (req.query?.categoryId) {
+        data = await sellerPostModel.find({
+          category_ref_id: req.query.categoryId,
+        });
+      }
+
       return res.send({ status: 200, message: null, data });
     } catch (err) {
       return res.send({
