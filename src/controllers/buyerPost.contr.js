@@ -6,7 +6,6 @@ export class buyerPostContr {
       const {
         categoryId,
         name,
-        price,
         capacity,
         capacityMeasure,
         type,
