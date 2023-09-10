@@ -1,8 +1,14 @@
 import jwt from 'jsonwebtoken';
 import { UserModel } from '../models/user.model.js';
+import { adminCheck } from './admin.check.js';
 export const checkToken = async (req, res, next) => {
   try {
     const token = req.headers?.authorization;
+    const result = await adminCheck(req, res);
+
+    if (result == 'ADMIN')
+      throw new Error('Siz adminsiz, Siz faqat tekshira olasiz!');
+      
     if (token) {
       const checkedToken = jwt.verify(token, process.env.SEC_KEY);
 
@@ -11,8 +17,8 @@ export const checkToken = async (req, res, next) => {
         if (user) {
           req.user = user;
           return next();
-        } else throw new Error('Invalid Token !!!');
-      } else throw new Error('Invalid Token !!!');
+        } else throw new Error('Invalid Token!!!');
+      } else throw new Error('Invalid Token!!!');
     } else throw new Error('Unauthorized');
   } catch (err) {
     return res.send({

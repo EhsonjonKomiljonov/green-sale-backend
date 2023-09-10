@@ -46,7 +46,7 @@ export class AdminContr {
         token,
       });
     } catch (err) {
-      return res.send({
+      return res.status(501).send({
         status: 501,
         message: err.message,
         data: null,
