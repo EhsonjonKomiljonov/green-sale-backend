@@ -22,8 +22,8 @@ export class AdminContr {
         throw new Error('Incorrect admin password!');
 
       const getAdmin = await AdminModel.findOne({
-        email,
-        password: sha256(admin_password),
+        admin_email,
+        admin_password: sha256(admin_password),
       });
 
       if (!getAdmin) throw new Error('Not Found admin!');
