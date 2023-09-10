@@ -18,10 +18,6 @@ const buyerPost = new Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
     capacity: {
       type: Number,
       required: true,

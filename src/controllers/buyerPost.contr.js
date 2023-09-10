@@ -18,7 +18,6 @@ export class buyerPostContr {
       if (
         categoryId &&
         name &&
-        price &&
         capacity &&
         capacityMeasure &&
         type &&
@@ -31,7 +30,6 @@ export class buyerPostContr {
           category_ref_id: categoryId,
           user_ref_id: req.user._id,
           name,
-          price,
           capacity,
           capacityMeasure,
           type,
