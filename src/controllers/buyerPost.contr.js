@@ -61,11 +61,15 @@ export class buyerPostContr {
       let data = [];
       data = await buyerPostModel.find();
       if (req.query?.categoryId) {
-        data = await sellerPostModel.find({
+        data = await buyerPostModel.find({
           category_ref_id: req.query.categoryId,
         });
       }
- 
+      if (req.params?.id) {
+        data = await buyerPostModel.findOne({
+          _id: req.params.id,
+        });
+      }
       return res.send({ status: 200, message: null, data });
     } catch (err) {
       return res.send({
