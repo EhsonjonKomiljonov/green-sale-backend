@@ -143,16 +143,19 @@ export class UserContr {
 
       if (getUser) throw new Error("Bunday User avval ro'yhatdan o'tgan!");
 
-      const data = await UserModel.create({
-        first_name,
-        last_name,
-        region,
-        district,
-        address,
-        email,
-        contact,
-        password: sha256(password),
-      });
+      const data = await UserModel.create(
+        {
+          first_name,
+          last_name,
+          region,
+          district,
+          address,
+          email,
+          contact,
+          password: sha256(password),
+        },
+        { new: true }
+      );
 
       const token = jwt.sign(
         { id: data._id, email: data.email, password: data.password },
@@ -164,6 +167,7 @@ export class UserContr {
         status: 200,
         message: 'success',
         token,
+        userPhone: data.contact,
       });
     } catch (err) {
       return res.status(501).send({
@@ -202,6 +206,7 @@ export class UserContr {
         status: 200,
         message: 'success',
         token,
+        userPhone: data.contact,
       });
     } catch (err) {
       return res.status(501).send({

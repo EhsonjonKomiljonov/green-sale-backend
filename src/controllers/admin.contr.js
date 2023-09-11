@@ -6,6 +6,8 @@ import { sellerPostModel } from '../models/sellerPost.model.js';
 import { buyerPostModel } from '../models/buyerPost.model.js';
 import { categoryModel } from '../models/categories.model.js';
 import { adminCheck } from '../middlewares/admin.check.js';
+import fs from 'fs';
+import path from 'path';
 
 const SEC_KEY = process.env.SEC_KEY;
 
@@ -134,14 +136,26 @@ export class AdminContr {
 
       if (typeof verifyAdmin == 'string') throw new Error(verifyAdmin);
 
-      const deletedPost = await sellerPostModel.findOneAndDelete({ _id: id });
+      const findedPost = await sellerPostModel.findById(req.params.id);
 
-      if (!deletedPost) throw new Error('Not found seller post to id: ' + id);
+      if (!findedPost) throw new Error('Not found seller post in id: ' + id);
+
+      if (findedPost.imgLink) {
+        for (let el of findedPost.imgLink) {
+          if (fs.existsSync(path.join(process.cwd(), 'public', el))) {
+            fs.unlinkSync(path.join(process.cwd(), 'public', el));
+          }
+        }
+      }
+
+      const deletedItem = await sellerPostModel.findByIdAndDelete(
+        req.params.id
+      );
 
       return res.send({
         status: 200,
-        message: 'deleted seller post',
-        deletedPost,
+        message: 'deleted',
+        data: deletedItem,
       });
     } catch (err) {
       return res.send({
