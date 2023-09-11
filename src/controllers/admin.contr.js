@@ -22,8 +22,8 @@ export class AdminContr {
         throw new Error('Incorrect admin password!');
 
       const getAdmin = await AdminModel.findOne({
-        email,
-        password: sha256(admin_password),
+        admin_email,
+        admin_password: sha256(admin_password),
       });
 
       if (!getAdmin) throw new Error('Not Found admin!');
@@ -46,7 +46,7 @@ export class AdminContr {
         token,
       });
     } catch (err) {
-      return res.send({
+      return res.status(501).send({
         status: 501,
         message: err.message,
         data: null,
