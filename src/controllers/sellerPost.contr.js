@@ -208,7 +208,7 @@ export class sellerPostContr {
     try {
       let data = [];
       data = await sellerPostModel.find({ user_ref_id: req.user._id });
-      data.push(...(await sellerPostModel.find({ user_ref_id: req.user._id })));
+      data.push(...(await buyerPostModel.find({ user_ref_id: req.user._id })));
 
       return res.send({ status: 200, message: null, data });
     } catch (err) {
