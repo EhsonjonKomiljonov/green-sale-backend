@@ -139,6 +139,7 @@ export class UserContr {
         contact,
         password,
       } = req.body;
+
       const getUser = await UserModel.findOne({ email });
 
       if (getUser) throw new Error("Bunday User avval ro'yhatdan o'tgan!");
@@ -153,8 +154,7 @@ export class UserContr {
           email,
           contact,
           password: sha256(password),
-        },
-        { new: true }
+        }
       );
 
       const token = jwt.sign(

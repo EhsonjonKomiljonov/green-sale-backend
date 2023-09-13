@@ -16,7 +16,6 @@ export const userCheck = (req, res, next) => {
         .max(60)
         .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])')),
     });
-
     const checkUser = validateUser.validate(req.body);
 
     if (checkUser?.error) throw new Error(checkUser.error);
