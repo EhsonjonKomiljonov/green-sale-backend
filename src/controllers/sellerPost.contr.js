@@ -127,8 +127,15 @@ export class sellerPostContr {
       if (!findedPost) {
         throw new Error('buday post mavjud emas!!!');
       }
+
       if (
-        (name || price || capacity || capacityMeasure || type || description) &&
+        (name ||
+          price ||
+          capacity ||
+          capacityMeasure ||
+          type ||
+          description ||
+          req.files.length) &&
         toString(req.user._id) == toString(findedPost.user_ref_id)
       ) {
         const filenames = [];

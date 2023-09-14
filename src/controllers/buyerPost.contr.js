@@ -81,15 +81,8 @@ export class buyerPostContr {
   }
   async buyerPostPut(req, res) {
     try {
-      const {
-        name,
-        price,
-        capacity,
-        capacityMeasure,
-        type,
-        description,
-        contact,
-      } = req.body;
+      const { name, price, capacity, capacityMeasure, type, description } =
+        req.body;
 
       const findedPost = await buyerPostModel.findById(req.params.id);
 
@@ -98,13 +91,7 @@ export class buyerPostContr {
       }
 
       if (
-        (name ||
-          price ||
-          capacity ||
-          capacityMeasure ||
-          type ||
-          description ||
-          contact) &&
+        (name || price || capacity || capacityMeasure || type || description) &&
         toString(req.user._id) == toString(findedPost.user_ref_id)
       ) {
         const newPost = await buyerPostModel.findByIdAndUpdate(req.params.id, {
@@ -116,7 +103,6 @@ export class buyerPostContr {
             : findedPost.capacityMeasure,
           type: type ? type : findedPost.type,
           description: description ? description : findedPost.description,
-          contact: contact ? contact : findedPost.contact,
         });
 
         return res.send({
