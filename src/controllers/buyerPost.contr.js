@@ -61,15 +61,21 @@ export class buyerPostContr {
       let data = [];
       data = await buyerPostModel.find();
       if (req.query?.categoryId) {
-        data = await buyerPostModel.find({
-          category_ref_id: req.query.categoryId,
-        });
+        data = await buyerPostModel
+          .find({
+            category_ref_id: req.query.categoryId,
+          })
+          .skip((req.query?.page - 1) * 10)
+          .limit(10);
       }
 
       if (req.query?.search) {
-        data = await buyerPostModel.find({
-          name: { $regex: req.query?.search, $options: 'i' },
-        });
+        data = await buyerPostModel
+          .find({
+            name: { $regex: req.query?.search, $options: 'i' },
+          })
+          .skip((req.query?.page - 1) * 10)
+          .limit(10);
       }
 
       if (req.query?.page) {

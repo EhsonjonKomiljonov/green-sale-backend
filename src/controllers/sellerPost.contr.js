@@ -76,14 +76,20 @@ export class sellerPostContr {
       let data = [];
       data = await sellerPostModel.find();
       if (req.query?.categoryId) {
-        data = await sellerPostModel.find({
-          category_ref_id: req.query.categoryId,
-        });
+        data = await sellerPostModel
+          .find({
+            category_ref_id: req.query.categoryId,
+          })
+          .skip((req.query?.page - 1) * 10)
+          .limit(10);
       }
       if (req.query?.search) {
-        data = await sellerPostModel.find({
-          name: { $regex: req.query?.search, $options: 'i' },
-        });
+        data = await sellerPostModel
+          .find({
+            name: { $regex: req.query?.search, $options: 'i' },
+          })
+          .skip((req.query?.page - 1) * 10)
+          .limit(10);
       }
 
       if (req.query?.page) {
