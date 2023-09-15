@@ -140,7 +140,7 @@ export class UserContr {
         password,
       } = req.body;
 
-      const getUser = await UserModel.findOne({ email });
+      const getUser = await UserModel.findOne({ email, contact });
 
       if (getUser) throw new Error("Bunday User avval ro'yhatdan o'tgan!");
 
