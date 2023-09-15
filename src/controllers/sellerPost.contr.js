@@ -74,7 +74,13 @@ export class sellerPostContr {
   async sellerPostGet(req, res) {
     try {
       let data = [];
-      data = await sellerPostModel.find();
+      let pages = Math.ceil((await sellerPostModel.countDocuments()) / 10);
+
+      data = await sellerPostModel
+        .find()
+        .skip((req.query?.page - 1) * 10)
+        .limit(10);
+
       if (req.query?.categoryId) {
         data = await sellerPostModel
           .find({
@@ -82,7 +88,9 @@ export class sellerPostContr {
           })
           .skip((req.query?.page - 1) * 10)
           .limit(10);
+        pages = Math.ceil(data.length / 10);
       }
+
       if (req.query?.search) {
         data = await sellerPostModel
           .find({
@@ -90,22 +98,14 @@ export class sellerPostContr {
           })
           .skip((req.query?.page - 1) * 10)
           .limit(10);
+        pages = Math.ceil(data.length / 10);
       }
-
-      if (req.query?.page) {
-        data = await sellerPostModel
-          .find()
-          .skip((req.query?.page - 1) * 10)
-          .limit(10);
-      }
-
-      let totalPages = Math.ceil(data.length / 10);
 
       return res.send({
         status: 200,
         message: null,
         data,
-        pages: totalPages,
+        pages,
         page: req.query?.page,
       });
     } catch (err) {
