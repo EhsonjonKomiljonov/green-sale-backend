@@ -80,8 +80,25 @@ export class sellerPostContr {
           category_ref_id: req.query.categoryId,
         });
       }
+      if (req.query?.search) {
+        data = await sellerPostModel.find({
+          name: req.query.search,
+        });
+      }
 
-      return res.send({ status: 200, message: null, data });
+      if (req.query?.page) {
+        data = await sellerPostModel
+          .find()
+          .skip((req.query?.page - 1) * 10)
+          .limit(10);
+      }
+
+      return res.send({
+        status: 200,
+        message: null,
+        data,
+        page: req.query?.page,
+      });
     } catch (err) {
       return res.send({
         status: 501,

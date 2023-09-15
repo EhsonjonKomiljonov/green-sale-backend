@@ -65,12 +65,31 @@ export class buyerPostContr {
           category_ref_id: req.query.categoryId,
         });
       }
+
+      if (req.query?.search) {
+        data = await buyerPostModel.find({
+          name: req.query.search,
+        });
+      }
+
+      if (req.query?.page) {
+        data = await buyerPostModel
+          .find()
+          .skip((req.query?.page - 1) * 10)
+          .limit(10);
+      }
+
       if (req.params?.id) {
         data = await buyerPostModel.findOne({
           _id: req.params.id,
         });
       }
-      return res.send({ status: 200, message: null, data });
+      return res.send({
+        status: 200,
+        message: null,
+        data,
+        page: req.query?.page,
+      });
     } catch (err) {
       return res.send({
         status: 501,
