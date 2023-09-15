@@ -58,7 +58,7 @@ export class sellerPostContr {
             message: null,
             data: newPost,
           });
-        } else throw new Error('img is required');
+        } else throw new Error('Rasm yuborish majburiy!');
       } else
         throw new Error(
           'Required values categoryId, name, price, capacity, capacityMeasure, type, region, district, description, contact, !!!'
