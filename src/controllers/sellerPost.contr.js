@@ -82,9 +82,8 @@ export class sellerPostContr {
       }
       if (req.query?.search) {
         data = await sellerPostModel.find({
-          name: req.query.search,
+          name: { $regex: req.query?.search, $options: 'i' },
         });
-        console.log(data);
       }
 
       if (req.query?.page) {
@@ -92,7 +91,7 @@ export class sellerPostContr {
           .find()
           .skip((req.query?.page - 1) * 10)
           .limit(10);
-        const totalDocs = await buyerPostModel.countDocuments();
+        const totalDocs = await sellerPostModel.countDocuments();
 
         var totalPages = Math.ceil(totalDocs / 10);
       }
