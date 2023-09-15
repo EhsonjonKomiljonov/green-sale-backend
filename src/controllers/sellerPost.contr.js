@@ -84,6 +84,7 @@ export class sellerPostContr {
         data = await sellerPostModel.find({
           name: req.query.search,
         });
+        console.log(data);
       }
 
       if (req.query?.page) {
