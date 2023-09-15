@@ -91,10 +91,9 @@ export class sellerPostContr {
           .find()
           .skip((req.query?.page - 1) * 10)
           .limit(10);
-        const totalDocs = await sellerPostModel.countDocuments();
-
-        var totalPages = Math.ceil(totalDocs / 10);
       }
+
+      let totalPages = Math.ceil(data.length / 10);
 
       return res.send({
         status: 200,

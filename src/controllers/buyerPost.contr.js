@@ -78,9 +78,8 @@ export class buyerPostContr {
           .skip((req.query?.page - 1) * 10)
           .limit(10);
       }
-      const totalDocs = await buyerPostModel.countDocuments();
 
-      var totalPages = Math.ceil(totalDocs / 10);
+      var totalPages = Math.ceil(data.length / 10);
 
       if (req.params?.id) {
         data = await buyerPostModel.findOne({
