@@ -169,4 +169,21 @@ export class buyerPostContr {
       });
     }
   }
+  async myPosts(req, res) {
+    try {
+      let data = [];
+      data = await buyerPostModel
+        .find({ user_ref_id: req.user._id })
+        .skip((req.query?.page - 1) * 10)
+        .limit(10);
+
+      return res.send({ status: 200, message: null, data });
+    } catch (err) {
+      return res.send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
 }
