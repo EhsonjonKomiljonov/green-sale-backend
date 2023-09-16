@@ -6,6 +6,7 @@ export const userRouter = Router();
 const user = new UserContr();
 
 userRouter
+  .get('/:id', user.getById)
   .get('/my-profile', user.myProfile)
   .put('/my-profile/info', userEditCheck, user.editMyProfileInfo)
   .put('/my-profile/security', user.editMyProfileSec)
