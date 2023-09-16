@@ -174,17 +174,29 @@ export class buyerPostContr {
   async myPosts(req, res) {
     try {
       let data = [];
+
+      let pages = Math.ceil(
+        (await buyerPostModel.find({ user_ref_id: req.user._id })).length / 10
+      );
+
       data = await buyerPostModel
         .find({ user_ref_id: req.user._id })
         .skip((req.query?.page - 1) * 10)
         .limit(10);
 
-      return res.send({ status: 200, message: null, data });
+      return res.send({
+        status: 200,
+        message: null,
+        data,
+        pages,
+        page: req.query?.page,
+      });
     } catch (err) {
       return res.send({
         status: 501,
         message: err.message,
         data: null,
+        page: req.query?.page,
       });
     }
   }
