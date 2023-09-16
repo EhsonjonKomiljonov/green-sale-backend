@@ -22,7 +22,7 @@ export class commentContr {
           updatedData = await findPostSell.save();
         } else if (findPostBuy) {
           findPostBuy.comments.push(newComment._id);
-          updatedData = await findPostBuy.save();
+          updatedData = await await findPostBuy.save();
         }
 
         return res.status(200).send({
