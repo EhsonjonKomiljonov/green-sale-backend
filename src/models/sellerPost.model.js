@@ -56,6 +56,10 @@ const sellerPost = new Schema(
       type: Array,
       required: true,
     },
+    favorite: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: {
