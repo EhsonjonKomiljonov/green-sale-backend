@@ -134,7 +134,13 @@ export class sellerPostContr {
     try {
       const data = await sellerPostModel
         .findById(req.params.id)
-        .populate('category_ref_id');
+        .populate('category_ref_id')
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'user_ref_id',
+          },
+        });
       return res.send({ status: 200, message: null, data });
     } catch (err) {
       return res.send({

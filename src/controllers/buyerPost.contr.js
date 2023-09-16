@@ -80,10 +80,13 @@ export class buyerPostContr {
       }
 
       if (req.params?.id) {
-        data = await buyerPostModel.findOne({
-          _id: req.params.id,
-        });
+        data = await buyerPostModel
+          .findOne({
+            _id: req.params.id,
+          })
+          .populate('comments');
       }
+
       return res.send({
         status: 200,
         message: null,
