@@ -23,8 +23,6 @@ export class favoritesContr {
           },
           { favorite: true }
         );
-        console.log(productUpdFavSell);
-        console.log(productUpdFavBuy);
         return res.send({
           status: 200,
           message: null,
@@ -32,7 +30,7 @@ export class favoritesContr {
         });
       }
     } catch (err) {
-      return res.send({
+      return res.status(501).send({
         status: 501,
         message: err.message,
         data: null,
@@ -60,16 +58,13 @@ export class favoritesContr {
           favorite: false,
         }
       );
-      console.log(buyerRemove);
-      console.log(sellerRemove);
-
       return res.send({
         status: 200,
         message: 'Favorite deleted',
         data: true,
       });
     } catch (err) {
-      return res.send({
+      return res.status(501).send({
         status: 501,
         message: err.message,
         data: null,
