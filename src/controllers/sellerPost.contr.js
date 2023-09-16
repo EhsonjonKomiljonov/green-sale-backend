@@ -257,6 +257,7 @@ export class sellerPostContr {
         .find({ user_ref_id: req.user._id })
         .skip((req.query?.page - 1) * 10)
         .limit(10);
+      console.log(data);
 
       return res.send({
         status: 200,
