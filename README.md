@@ -8,6 +8,7 @@ USERS
 /users/login                      (post) => user login.
 /users/reset-password             (post) => user passwordini email orqali o'zgartiradi.
 /users/verify-email/:hashUrl      (get) => user o'zini email orqali tasdiqlash page.
+/users/:id                        (get) => bir dona user ma'lumoti.
 /users/my-profile                 (get) => o'zini ma'lumotlari keladi.
 /users/my-profile/info            (put) => o'zini ma'lumotini passworddan tashqarisini o'zgartiradi.
 /users/my-profile/security        (put) => o'zini ma'lumotini passwordini o'zgartiradi.

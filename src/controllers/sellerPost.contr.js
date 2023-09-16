@@ -274,4 +274,19 @@ export class sellerPostContr {
       });
     }
   }
+  async sellerPostGetByUserId(req, res) {
+    try {
+      let data = [];
+      const { id } = req.params;
+      data = await sellerPostModel.find({ user_ref_id: id });
+
+      return res.send({ status: 200, message: null, data });
+    } catch (err) {
+      return res.send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
 }

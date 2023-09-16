@@ -10,6 +10,27 @@ const SEC_KEY = process.env.SEC_KEY;
 const host = process.env.host;
 
 export class UserContr {
+  async getById(req, res) {
+    try {
+      const { id } = req.params;
+
+      const data = await UserModel.findById({ _id: id });
+
+      if (!data) throw new Error('Bunday User mavjud emas!');
+
+      return res.send({
+        status: 200,
+        message: 'success',
+        data,
+      });
+    } catch (err) {
+      return res.status(501).send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
   async myProfile(req, res) {
     try {
       const token = req.headers?.authorization;
@@ -144,18 +165,16 @@ export class UserContr {
 
       if (getUser) throw new Error("Bunday User avval ro'yhatdan o'tgan!");
 
-      const data = await UserModel.create(
-        {
-          first_name,
-          last_name,
-          region,
-          district,
-          address,
-          email,
-          contact,
-          password: sha256(password),
-        }
-      );
+      const data = await UserModel.create({
+        first_name,
+        last_name,
+        region,
+        district,
+        address,
+        email,
+        contact,
+        password: sha256(password),
+      });
 
       const token = jwt.sign(
         { id: data._id, email: data.email, password: data.password },
