@@ -186,4 +186,19 @@ export class buyerPostContr {
       });
     }
   }
+  async buyerPostGetByUserId(req, res) {
+    try {
+      let data = [];
+      const { id } = req.params;
+      data = await buyerPostModel.find({ user_ref_id: id });
+
+      return res.send({ status: 200, message: null, data });
+    } catch (err) {
+      return res.send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
 }

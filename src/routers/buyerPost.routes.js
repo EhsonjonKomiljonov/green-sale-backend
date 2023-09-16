@@ -10,5 +10,6 @@ buyerPostRouter
   .get('/', buyerPost.buyerPostGet)
   .get('/my-posts', buyerPost.myPosts)
   .get('/:id', buyerPost.buyerPostGet)
+  .get('/user/:id', buyerPost.buyerPostGetByUserId)
   .put('/:id', checkToken, buyerPost.buyerPostPut)
   .delete('/:id', checkToken, buyerPost.buyerPostDelete);
