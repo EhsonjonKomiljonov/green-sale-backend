@@ -119,8 +119,8 @@ export class sellerPostContr {
   async sellerPostGetPosts(req, res) {
     try {
       let data = [];
-      data.push(...(await sellerPostModel.find().limit(3)));
-      data.push(...(await buyerPostModel.find().limit(3)));
+      data.push(...(await sellerPostModel.find().limit(3).sort({ _id: -1 })));
+      data.push(...(await buyerPostModel.find().limit(3).sort({ _id: -1 })));
       return res.send({ status: 200, message: null, data });
     } catch (err) {
       return res.send({
