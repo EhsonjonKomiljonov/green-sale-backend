@@ -7,4 +7,5 @@ const comment = new commentContr();
 
 commentRouter
   .post('/', checkToken, comment.addComment)
-  .delete('/:id', checkToken, comment.deleteComment);
+  .delete('/:id', checkToken, comment.deleteComment)
+  .put('/:id', checkToken, comment.editComment);

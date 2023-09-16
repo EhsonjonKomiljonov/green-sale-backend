@@ -44,31 +44,67 @@ export class commentContr {
     try {
       const { id } = req.params;
 
-      const deletedComment = await commentModel.findByIdAndDelete(id);
+      const findedComment = await commentModel.findById(id);
+      if (!findedComment) throw new Error('Bunday comment mavjud emas');
+      console.log(
+        toString(findedComment.user_ref_id) == toString(req.user._id)
+      );
 
-      console.log(deletedComment);
+      if (toString(findedComment.user_ref_id) == toString(req.user._id)) {
+        const deletedComment = await commentModel.findByIdAndDelete(id);
 
-      if (!deletedComment) {
-        return res.status(404).send({
-          status: 404,
-          message: 'Comment not found',
-          data: null,
+        await sellerPostModel.findByIdAndUpdate(deletedComment.product_ref_id, {
+          $pull: { comments: id },
         });
+
+        await buyerPostModel.findByIdAndUpdate(deletedComment.product_ref_id, {
+          $pull: { comments: id },
+        });
+
+        return res.send({
+          status: 200,
+          message: 'Comment deleted',
+          data: true,
+        });
+      } else throw new Error('Siz boshqalarni commentini ochira olmaysiz !');
+    } catch (err) {
+      return res.status(501).send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
+  async editComment(req, res) {
+    try {
+      const { id } = req.params;
+      const text = req.body?.text;
+      const foundComment = await commentModel.findById(id);
+      if (!foundComment) {
+        throw new Error('Bunday comment mavjud emas');
       }
 
-      await sellerPostModel.findByIdAndUpdate(deletedComment.product_ref_id, {
-        $pull: { comments: id },
-      });
+      if (foundComment.user_ref_id.toString() == req.user._id.toString()) {
+        const updatedComment = await commentModel.findByIdAndUpdate(
+          id,
+          { text: text },
+          { new: true }
+        );
 
-      await buyerPostModel.findByIdAndUpdate(deletedComment.product_ref_id, {
-        $pull: { comments: id },
-      });
+        if (!updatedComment) {
+          throw new Error('Comment update failed');
+        }
 
-      return res.send({
-        status: 200,
-        message: 'Comment deleted',
-        data: true,
-      });
+        return res.status(200).send({
+          status: 200,
+          message: 'Comment edited',
+          data: updatedComment,
+        });
+      } else {
+        throw new Error(
+          'Siz boshqalarni commentni tahrir olishda ruxsat etilmaysiz!'
+        );
+      }
     } catch (err) {
       return res.status(501).send({
         status: 501,
