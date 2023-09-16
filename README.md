@@ -25,7 +25,7 @@ SELLER POST
 
 /seller-post                      (post) => post qoshish
 /seller-post/get-posts            (get) => 3ta buyer 3ta seller
-/seller-post                      (get) => postlarni hammasini olish
+/seller-post?page=1               (get) => postlarni hammasini olish (paginate)
 /seller-post/:id                  (get) => postni id bilan olish
 /seller-post/:id                  (put) => post update faqat ozinikini.
 /seller-post/:id                  (delete) => post ochirish faqat ozinikini.
@@ -33,7 +33,7 @@ SELLER POST
 buyer POST
 
 /buyer-post                       (post) => post qoshish
-/buyer-post                       (get) => postlarni hammasini olish
+/buyer-post?page=1                (get) => postlarni hammasini olish (paginate)
 /buyer-post/:id                   (get) => postni id bilan olish
 /buyer-post/:id                   (put) => post update faqat ozinikini.
 /buyer-post/:id                   (delete) => post ochirish faqat ozinikini.
