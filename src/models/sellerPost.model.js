@@ -60,6 +60,12 @@ const sellerPost = new Schema(
       type: Boolean,
       default: false,
     },
+    comments: {
+      type: [Types.ObjectId],
+      ref: 'comments',
+      key: '_id',
+      required: true,
+    },
   },
   {
     timestamps: {

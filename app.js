@@ -7,6 +7,7 @@ import { adminRouter } from './src/routers/admin.routes.js';
 import { checkTokenRouter } from './src/routers/checkToken.routes.js';
 import cors from 'cors';
 import { favoritesRouter } from './src/routers/favorites.routes.js';
+import { commentRouter } from './src/routers/comment.routes.js';
 
 config();
 export const app = express();
@@ -23,3 +24,4 @@ app.use('/admin', adminRouter);
 app.use('/seller-post', sellerPostRouter);
 app.use('/buyer-post', buyerPostRouter);
 app.use('/favorites', favoritesRouter);
+app.use('/comments', commentRouter);

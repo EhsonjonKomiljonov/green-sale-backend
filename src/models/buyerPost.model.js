@@ -50,6 +50,12 @@ const buyerPost = new Schema(
       type: Boolean,
       default: false,
     },
+    comments: [
+      {
+        type: Types.ObjectId,
+        required: true,
+      },
+    ],
   },
   {
     timestamps: {
