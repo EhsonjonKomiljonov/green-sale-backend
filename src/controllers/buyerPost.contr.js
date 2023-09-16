@@ -60,6 +60,7 @@ export class buyerPostContr {
     try {
       let pages = Math.ceil((await buyerPostModel.countDocuments()) / 10);
       let data = [];
+
       data = await buyerPostModel
         .find()
         .skip((req.query?.page - 1) * 10)
@@ -84,7 +85,8 @@ export class buyerPostContr {
           .findOne({
             _id: req.params.id,
           })
-          .populate('comments');
+          .populate('comments')
+          .populate('user_ref_id');
       }
 
       return res.send({

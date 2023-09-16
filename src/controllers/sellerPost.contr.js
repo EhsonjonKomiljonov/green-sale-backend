@@ -140,7 +140,8 @@ export class sellerPostContr {
           populate: {
             path: 'user_ref_id',
           },
-        });
+        })
+        .populate('user_ref_id');
       return res.send({ status: 200, message: null, data });
     } catch (err) {
       return res.send({
