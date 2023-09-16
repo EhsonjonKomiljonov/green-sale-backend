@@ -46,9 +46,6 @@ export class commentContr {
 
       const findedComment = await commentModel.findById(id);
       if (!findedComment) throw new Error('Bunday comment mavjud emas');
-      console.log(
-        toString(findedComment.user_ref_id) == toString(req.user._id)
-      );
 
       if (toString(findedComment.user_ref_id) == toString(req.user._id)) {
         const deletedComment = await commentModel.findByIdAndDelete(id);
