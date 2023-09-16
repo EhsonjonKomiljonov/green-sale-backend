@@ -3,6 +3,26 @@ import { favoriteModel } from '../models/favorites.model.js';
 import { sellerPostModel } from '../models/sellerPost.model.js';
 
 export class favoritesContr {
+  async getFavorites(req, res) {
+    try {
+      let data = [];
+
+      data.push(...(await sellerPostModel.find({ favorite: true })));
+      data.push(...(await buyerPostModel.find({ favorite: true })));
+
+      return res.send({
+        status: 200,
+        message: 'success',
+        data,
+      });
+    } catch (err) {
+      return res.status(501).send({
+        status: 501,
+        message: err.message,
+        data: null,
+      });
+    }
+  }
   async addFavorite(req, res) {
     try {
       const { product_ref_id } = req.body;
