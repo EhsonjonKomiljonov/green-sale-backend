@@ -34,8 +34,9 @@ export class UserContr {
   async myProfile(req, res) {
     try {
       const token = req.headers?.authorization;
-
+      
       const checkToken = jwt.verify(token, SEC_KEY);
+
 
       if (typeof checkToken != 'string') {
         const data = await UserModel.findOne({ _id: checkToken.id });
