@@ -87,7 +87,8 @@ export class buyerPostContr {
             _id: req.params.id,
           })
           .populate('comments')
-          .populate('user_ref_id');
+          .populate('user_ref_id')
+          .populate('category_ref_id');
       }
 
       return res.send({
