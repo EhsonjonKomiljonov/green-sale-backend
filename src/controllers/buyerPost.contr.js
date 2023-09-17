@@ -177,6 +177,20 @@ export class buyerPostContr {
 
       data = await buyerPostModel.find({ user_ref_id: req.user._id });
 
+      if (req.query?.categoryId) {
+        data = await buyerPostModel.find({
+          user_ref_id: req.user._id,
+          category_ref_id: req.query.categoryId,
+        });
+      }
+
+      if (req.query?.search) {
+        data = await buyerPostModel.find({
+          user_ref_id: req.user._id,
+          name: { $regex: req.query?.search, $options: 'i' },
+        });
+      }
+
       return res.send({
         status: 200,
         message: null,
