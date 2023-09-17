@@ -10,4 +10,5 @@ adminRouter
   .put('/edit-category/:id', admin.editCategory)
   .delete('/delete-category/:id', admin.deleteCategory)
   .delete('/delete-seller-post/:id', admin.deleteSellerPost) 
-  .delete('/delete-buyer-post/:id', admin.deleteBuyerPost);
+  .delete('/delete-buyer-post/:id', admin.deleteBuyerPost)
+  .delete('/delete-comment/:id', admin.deleteComment);
