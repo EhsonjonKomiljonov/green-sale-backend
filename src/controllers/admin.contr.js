@@ -168,6 +168,12 @@ export class AdminContr {
         req.params.id
       );
 
+      const deletePostComment = await findedPost?.comments?.map(
+        async (item) => {
+          await commentModel.findByIdAndDelete(item);
+        }
+      );
+
       return res.send({
         status: 200,
         message: 'deleted',
@@ -189,6 +195,12 @@ export class AdminContr {
       if (typeof verifyAdmin == 'string') throw new Error(verifyAdmin);
 
       const deletedPost = await buyerPostModel.findOneAndDelete({ _id: id });
+
+      const deletePostComment = await deletedPost?.comments?.map(
+        async (item) => {
+          await commentModel.findByIdAndDelete(item);
+        }
+      );
 
       return res.send({
         status: 200,

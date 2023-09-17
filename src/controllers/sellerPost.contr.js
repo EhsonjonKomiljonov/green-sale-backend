@@ -3,6 +3,7 @@ import { sellerPostModel } from '../models/sellerPost.model.js';
 import fs from 'fs';
 import path from 'path';
 import { buyerPostModel } from '../models/buyerPost.model.js';
+import { commentModel } from '../models/comments.model.js';
 export class sellerPostContr {
   async sellerPostAdd(req, res) {
     try {
@@ -228,6 +229,12 @@ export class sellerPostContr {
 
         const deletedItem = await sellerPostModel.findByIdAndDelete(
           req.params.id
+        );
+
+        const deletePostComment = await findedPost?.comments?.map(
+          async (item) => {
+            await commentModel.findByIdAndDelete(item);
+          }
         );
 
         return res.send({
