@@ -1,4 +1,5 @@
 import { buyerPostModel } from '../models/buyerPost.model.js';
+import { commentModel } from '../models/comments.model.js';
 
 export class buyerPostContr {
   async buyerPostAdd(req, res) {
@@ -155,6 +156,12 @@ export class buyerPostContr {
       if (toString(req.user._id) == toString(findedPost.user_ref_id)) {
         const deletedItem = await buyerPostModel.findByIdAndDelete(
           req.params.id
+        );
+
+        const deletePostComment = await findedPost?.comments?.map(
+          async (item) => {
+            await commentModel.findByIdAndDelete(item);
+          }
         );
 
         return res.send({
