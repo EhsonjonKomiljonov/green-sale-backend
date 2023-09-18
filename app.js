@@ -8,6 +8,9 @@ import { checkTokenRouter } from './src/routers/checkToken.routes.js';
 import cors from 'cors';
 import { favoritesRouter } from './src/routers/favorites.routes.js';
 import { commentRouter } from './src/routers/comment.routes.js';
+import { categoryModel } from './src/models/categories.model.js';
+import sha256 from 'sha256';
+import { AdminModel } from './src/models/admin.model.js';
 
 config();
 export const app = express();
@@ -17,6 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(process.cwd() + '/public'));
 app.set('view engine', 'ejs');
+
+// AdminModel.create({
+//   admin_name: 'Admin',
+//   admin_email: 'admin@gmail.com',
+//   admin_password: sha256('Admin123#')
+// })
 
 app.use('/check-token', checkTokenRouter);
 app.use('/users', userRouter);
