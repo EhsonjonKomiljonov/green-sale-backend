@@ -21,12 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(process.cwd() + '/public'));
 app.set('view engine', 'ejs');
 
-// AdminModel.create({
-//   admin_name: 'Admin',
-//   admin_email: 'admin@gmail.com',
-//   admin_password: sha256('Admin123#')
-// })
-
 app.use('/check-token', checkTokenRouter);
 app.use('/users', userRouter);
 app.use('/admin', adminRouter);
